@@ -9,14 +9,16 @@ import {
 } from "react-router-dom";
 import ChatRoom from "./components/ChatRoom";
 import Home from "./components/Home";
+import {io} from "socket.io-client"
+const socket = io("http://localhost:3000");
 
 function App() {
-  const [name, setName] = useState(localStorage.getItem("name") || "");
-
+  const [name, setName] = useState(localStorage.getItem("name") ?localStorage.getItem("name") :"");
+socket.on("connect",()=>console.log('connected'))
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<HomeRoute name={name} setName={setName} />} />
+        <Route path="/" element={name.length?<Navigate to="/chat" replace />:<HomeRoute name={name} setName={setName} />} />
         <Route
           path="/chat"
           element={<ChatRoute name={name} setName={setName} />}
@@ -32,7 +34,7 @@ function HomeRoute({ name, setName }) {
 
   const handleNameSubmit = (event) => {
     event.preventDefault();
-    const trimmedName = name.trim();
+    const trimmedName = event.target.name.value.trim();
     localStorage.setItem("name", trimmedName);
     if (!trimmedName) return;
 
@@ -52,6 +54,7 @@ function ChatRoute({ name, setName }) {
 
   const handleLeave = () => {
     setName("");
+    localStorage.clear()
     navigate("/");
   };
 

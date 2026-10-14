@@ -7,7 +7,7 @@ function connectToDb() {
   mongoose
     .connect(DBURI, { dbName: "chatapp" })
     .then(() => console.log("connected to db "))
-    .catch(e=>console.error(error.message))
+    .catch(e=>console.error(e.message))
 }
 
 

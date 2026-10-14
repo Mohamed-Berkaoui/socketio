@@ -14,8 +14,8 @@ function Home({ name, setName, onSubmit }) {
               id="name"
               className="text-input"
               type="text"
-              value={name}
-              onChange={(event) => setName(event.target.value)}
+              // value={name}
+              // onChange={(event) => setName(event.target.value)}
               placeholder="e.g. Alex"
               autoComplete="name"
               autoFocus
